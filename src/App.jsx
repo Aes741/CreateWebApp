@@ -10,7 +10,7 @@ export default function App() {
   const [isHiddenBarOpen, setHiddenBarOpen] = useState(false);
   const [unit, setUnit] = useState('metric');
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentLocation, setCurrentLocation] = useState({ lat: null, lon: null });
+  const [currentLocation, setCurrentLocation] = useState({ lat: -12.0464, lon: -77.0428 });
   const apiKey = '3bc4c9f45cf04e7a74ac17d51146bf82';
 
   const getCurrentData = async (url) => {
@@ -78,7 +78,6 @@ export default function App() {
       },
       (error) => {
         console.error(error);
-        // Handle errors here
       },
       { enableHighAccuracy: true }
     );
