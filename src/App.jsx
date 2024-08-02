@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/Sidebar';
 import MainContainer from './components/MainContainer';
 import HiddenBar from './components/HiddenBar';
 
@@ -10,7 +10,7 @@ export default function App() {
   const [isHiddenBarOpen, setHiddenBarOpen] = useState(false);
   const [unit, setUnit] = useState('metric');
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentLocation, setCurrentLocation] = useState({ lat: -0.22985, lon: -78.52495 });
+  const [currentLocation, setCurrentLocation] = useState({ lat: null, lon: null });
   const apiKey = '3bc4c9f45cf04e7a74ac17d51146bf82';
 
   const getCurrentData = async (url) => {
@@ -70,12 +70,28 @@ export default function App() {
     });
   };
 
-  useEffect(() => {
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&units=${unit}&appid=${apiKey}`;
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentLocation.lat}&lon=${currentLocation.lon}&units=${unit}&appid=${apiKey}`;
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation({ lat: latitude, lon: longitude });
+      },
+      (error) => {
+        console.error(error);
+        // Handle errors here
+      },
+      { enableHighAccuracy: true }
+    );
+  };
 
-    getCurrentData(weatherUrl);
-    getForecastData(forecastUrl);
+  useEffect(() => {
+    if (currentLocation.lat && currentLocation.lon) {
+      const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&units=${unit}&appid=${apiKey}`;
+      const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentLocation.lat}&lon=${currentLocation.lon}&units=${unit}&appid=${apiKey}`;
+
+      getCurrentData(weatherUrl);
+      getForecastData(forecastUrl);
+    }
   }, [unit, currentLocation]);
 
   const handleOpenHiddenBar = () => {
@@ -113,6 +129,7 @@ export default function App() {
           current={current}
           unit={unit}
           onOpenHiddenBar={handleOpenHiddenBar}
+          onGetCurrentLocation={getCurrentLocation} 
         />
         <MainContainer
           current={current}

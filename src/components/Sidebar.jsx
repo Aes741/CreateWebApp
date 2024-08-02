@@ -2,7 +2,7 @@ import React from 'react';
 import { LocationOn, LocationSearching } from '@mui/icons-material';
 import iconMap from './iconMap';
 
-export default function Sidebar({ current, unit, onOpenHiddenBar }) {
+export default function Sidebar({ current, unit, onOpenHiddenBar, onGetCurrentLocation}) {
   const iconSrc = iconMap[current.icon] || '/img/Default.png';
 
   return (
@@ -16,7 +16,7 @@ export default function Sidebar({ current, unit, onOpenHiddenBar }) {
         </div>
         <div
           className="text-[#e7e7eb] text-2xl h-9 w-9 flex items-center justify-center rounded-full bg-white bg-opacity-20 shadow-md cursor-pointer hover:bg-[#444242] transition duration-400 ease-in-out ml-4"
-          onClick={onOpenHiddenBar}
+          onClick={onGetCurrentLocation} 
         >
           <LocationSearching />
         </div>
