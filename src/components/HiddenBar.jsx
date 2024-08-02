@@ -1,27 +1,33 @@
 import React from 'react';
-import { Close } from '@mui/icons-material';
+import { Close, Search } from '@mui/icons-material';
 
-export default function HiddenBar({ searchTerm, onSearchChange, onSearchSubmit, onClose }) {
+export default function HiddenBar({ isHiddenBarOpen, handleCloseHiddenBar, handleSearchSubmit, searchTerm, handleSearchChange }) {
   return (
-    <div className="fixed top-0 right-0 w-full h-full bg-[#2e2e2e] z-50 p-4 lg:p-8 overflow-auto">
-      <div className="relative flex flex-col items-center">
-        <div className="absolute top-4 right-4 text-white text-xl cursor-pointer" onClick={onClose}>
-          <Close />
+    isHiddenBarOpen && (
+      <div className="absolute bg-[#1e213a] sm:w-[459px] w-full h-full transform translate-x-0 transition-transform duration-600 ease-in-out rounded-lg flex flex-col p-6">
+        <div className="text-[#e7e7eb] text-3xl font-light mb-4 text-right">
+          <span className="material-icons cursor-pointer" onClick={handleCloseHiddenBar}>
+            <Close />
+          </span>
         </div>
-        <h2 className="text-white text-2xl font-semibold mb-6">Search for a location</h2>
-        <form onSubmit={onSearchSubmit} className="w-full max-w-md flex">
-          <input
-            type="text"
-            placeholder="Enter location"
-            value={searchTerm}
-            onChange={onSearchChange}
-            className="flex-1 p-3 rounded-l-md border border-gray-300 text-black"
-          />
-          <button type="submit" className="bg-[#e7e7eb] text-[#110e3c] p-3 rounded-r-md">
-            Search
-          </button>
+        <form onSubmit={handleSearchSubmit}>
+          <div className="relative flex flex-col sm:flex-row w-full mb-4">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              name="search"
+              id="textsearch"
+              placeholder="Search location"
+              className="flex-1 border border-[#e7e7eb] bg-transparent text-white pl-10 py-2 text-lg placeholder-[#616475] bg-no-repeat bg-[left_8px_top_12px] mb-4 sm:mb-0 sm:mr-4"
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <Search className="text-[#e7e7eb]" />
+            </div>
+            <input type="submit" className="bg-[#3c47e9] text-[#e7e7eb] text-lg text-center py-2 px-4 cursor-pointer" value="Search" />
+          </div>
         </form>
       </div>
-    </div>
+    )
   );
 }
