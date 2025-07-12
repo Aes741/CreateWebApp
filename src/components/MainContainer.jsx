@@ -11,7 +11,7 @@ const MainContainer = ({ current, current2 }) => {
       <Units unit={unit} setUnit={setUnit} />
       <Days current2={current2} unit={unit} />
       <Highlights current={current} unit={unit} />
-      <div className="text-center text-xs mt-6">Created by Aesaltos2 - devChallenges.io</div>
+      <div className="text-center text-xs mt-6">Created by Ensign College Team</div>
     </div>
   );
 }
