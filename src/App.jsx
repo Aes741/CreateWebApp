@@ -123,6 +123,9 @@ export default function App() {
 
   return (
     <>
+    <div className="text-center text-[18px] font-medium my-4">
+        10.2 Team Sprint Report: Create a Web App
+    </div>
       <div className="relative flex flex-col lg:flex-row bg-black text-white overflow-auto">
         <Sidebar
           current={current}
